@@ -1,11 +1,11 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import PhoneAuth from "../pages/PhoneAuth";
-import Projects from "../pages/Projects";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Auth from "../pages/Auth";
+import Products from "../pages/Products";
+import AuthProvider from "../authentication";
 
 const routes = [
-    { path: "/", element: <Navigate to="/auth" /> },
-    { path: "/auth", element: <PhoneAuth /> },
-    { path: "/projects", element: <Projects /> },
+    { path: "/", element: <Products />, isPrivate: true },
+    { path: "/auth", element: <Auth />, isPrivate: false },
 ];
 
 function RouteContainer(): JSX.Element {
@@ -16,7 +16,11 @@ function RouteContainer(): JSX.Element {
                     <Route
                         key={index}
                         path={route.path}
-                        element={route.element}
+                        element={
+                            <AuthProvider isPrivate={route.isPrivate}>
+                                {route.element}
+                            </AuthProvider>
+                        }
                     />
                 ))}
             </Routes>

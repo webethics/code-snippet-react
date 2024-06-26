@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { ReactElement } from "react";
-import Button from "../components/formElements/Button";
+import Button from "./formElements/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { LoginType } from "../types/auth";
 import ErrorMessage from "./ErrorMessage";
 import { login } from "../services/authService";
 import { toast } from "react-toastify";
+import useAuth from "../authentication/useAuth";
+import { invalidateTagsAfterLogin } from "../store/slices/prodcuts";
+import { useDispatch } from "react-redux";
 
-export default function SigninPhone(): ReactElement {
+export default function SignIn(): ReactElement {
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState<boolean>();
+    const { setToken } = useAuth();
     const navigate = useNavigate();
     const {
         register,
@@ -17,12 +23,17 @@ export default function SigninPhone(): ReactElement {
     } = useForm<LoginType>();
 
     const onSubmit: SubmitHandler<LoginType> = async (data) => {
+        setLoading(true);
         try {
             await login({ email: data.email, password: data.password });
+            invalidateTagsAfterLogin(dispatch);
             toast.success("Login successful");
-            navigate("/project");
+            setToken("false_token");
+            navigate("/");
         } catch (err) {
             toast.error("somthing went wrong please try again");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -76,7 +87,7 @@ export default function SigninPhone(): ReactElement {
                                 type: "submit", // Change type to "button" to prevent form submission
                                 disabled: false,
                                 value: "Login",
-                                loader: false,
+                                loader: loading,
                             }}
                         />
                     </form>

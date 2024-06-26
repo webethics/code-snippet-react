@@ -1,10 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "./slices/userSlice";
+import { products } from "./slices/prodcuts";
 
 const store = configureStore({
     reducer: {
-        user: userSlice.reducer,
+        [products.reducerPath]: products.reducer,
+        // other slices here...
     },
+
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            immutableCheck: { warnAfter: 128 },
+            serializableCheck: { warnAfter: 128 },
+        }).concat(
+            products.middleware
+
+            // other slices here...
+        ),
 });
 
 export default store;
