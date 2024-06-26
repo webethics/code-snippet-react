@@ -15,6 +15,5 @@ jobs:
         with:
           build: npm run build
           start: npm run preview
-          wait-on: "http://localhost:3000"
 
           
