@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Text cases
 
 on: push
 
@@ -13,7 +13,9 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          build: npm run build
-          start: npm run preview
+          browser: chrome
+          start: npm run dev
+          wait-on: "http://localhost:5173"
+        env:
 
           

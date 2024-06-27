@@ -7,7 +7,7 @@ This React project uses React Redux Toolkit for state management and React Route
 * User Login using email 
 
 
-### store
+### products
 
 * get products
 
@@ -33,6 +33,13 @@ npm install
 3. Start the development server:
 
 npm run dev 
+
+
+4. Start the test cases if you want to run
+
+npm run test 
+
+for test cases make sure your development server is running
 
 
 The development server will start at `http://localhost:5173` by default. You can now access the application in your browser.
